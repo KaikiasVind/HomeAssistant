@@ -1,8 +1,10 @@
 import core.Loop;
+import core.AddonManager;
 
 public class main {
 
     public static void main (String[] arguments) {
-        Loop.start();
+        AddonManager.getAddons();
+        // Loop.start();
     }
 }
