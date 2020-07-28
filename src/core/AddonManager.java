@@ -3,6 +3,7 @@ package core;
 import addons.*;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,20 +11,30 @@ import java.net.URLClassLoader;
 
 public abstract class AddonManager {
 
-    private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/InstantAnswers.class";
+    private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/";
 
     public static void getAddons() {
 
         File file = new File(addonPath);
 
         try {
-            URL url = file.toURI().toURL();
-            URL[] urls = new URL[] { url };
+            URL[] urls = new URL[] { file.toURI().toURL() };
 
-            ClassLoader cl = new URLClassLoader(urls);
+            for (URL url : urls) {
+                System.out.println(url.toString());
+                Class<?> addonClass = Class.forName("addons.InstantAnswers");
+                Addon foundAddon = (Addon) addonClass.getConstructor().newInstance();
+                foundAddon.init();
+            }
 
 
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
 

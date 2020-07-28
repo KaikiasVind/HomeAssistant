@@ -7,7 +7,7 @@ public class InstantAnswers implements Addon {
     public static final String name = "InstantAnswers";
     public static final String[] hotWords = new String[] {"define"};
 
-    public InstantAnswers() {}
+    public InstantAnswers() {};
 
     @Override
     public void init() {
