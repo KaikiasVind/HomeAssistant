@@ -1,42 +1,79 @@
 package core;
 
-import addons.*;
-
 import java.io.File;
-import java.lang.reflect.Constructor;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public abstract class AddonManager {
 
-    private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/";
+    // private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/";
+    private final static String addonPath = "addons/";
 
     public static void getAddons() {
 
-        File file = new File(addonPath);
-
+        File file = new File(addonPath + "InstantAnswers.jar");
         try {
-            URL[] urls = new URL[] { file.toURI().toURL() };
+            JarFile jarFile = new JarFile(file);
 
-            for (URL url : urls) {
-                System.out.println(url.toString());
-                Class<?> addonClass = Class.forName("addons.InstantAnswers");
-                Addon foundAddon = (Addon) addonClass.getConstructor().newInstance();
-                foundAddon.init();
+            URLClassLoader ucl = new URLClassLoader(new URL[] { file.toURI().toURL()});
+
+            Enumeration<JarEntry> entries = jarFile.entries();
+
+            while (entries.hasMoreElements()) {
+                String entryName = entries.nextElement().getName();
+
+                if (!entryName.endsWith(".class") || entryName.equals("Addon.class"))
+                    continue;
+
+                Class<?> foundClass = ucl.loadClass(entryName.replace("/", ".").replace(".class", ""));
+                Addon a = (Addon) foundClass.getDeclaredConstructor().newInstance();
+                a.init();
             }
-
-
-        } catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IOException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+//        System.out.println(System.getProperty("user.dir"));
+//        System.exit(0);
+
+//        File[] addonFiles = new File(addonPath).listFiles();
+//        ArrayList<String> addonFileNames = new ArrayList<String>() ;
+//
+//        if (addonFiles == null) {
+//            System.out.println("I found no addons.");
+//            return;
+//        }
+//
+//        for (File file : addonFiles) {
+//            if (file.isFile())
+//                addonFileNames.add(file.getName().replace(".class", ""));
+//        }
+//
+//        for (String string : addonFileNames)
+//            System.out.println(string);
+//
+//        System.exit(0);
+
+//        try {
+//            URL[] urls = new URL[] { file.toURI().toURL() };
+
+//            for (URL url : urls) {
+//                System.out.println(url.toString());
+//                Class<?> addonClass = Class.forName("addons.InstantAnswers");
+//                Addon foundAddon = (Addon) addonClass.getConstructor().newInstance();
+//                foundAddon.init();
+//            }
+
+
+//        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
 
 
 //        Addon [] foundAddons;
