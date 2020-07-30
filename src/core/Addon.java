@@ -1,7 +1,5 @@
 package core;
 
-import core.Output;
-
 public abstract class Addon {
 
     public final String name;
@@ -19,14 +17,15 @@ public abstract class Addon {
 
     /**
      * Start the main functionality of the addon
+     * @param userInput - The input from the user for parsing
      */
-    public abstract void run(String[] parameters);
+    public abstract void run(String userInput);
 
     /**
      * Change the current run of the Addon with the given addons
-     * @param parameters - A list of parameters that is used on the addon
+     * @param userInput - The input from the user for parsing
      */
-    public abstract void change(String[] parameters);
+    public abstract void change(String userInput);
 
     /**
      * Stop the run of the Addon and return to the main Loop
@@ -42,5 +41,5 @@ public abstract class Addon {
      *
      * @param content
      */
-    protected void output(final String content) { Output.print(content); }
+    protected void output(final String content) { IO.out(content); }
 }

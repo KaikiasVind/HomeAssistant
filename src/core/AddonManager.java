@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -15,6 +16,10 @@ public abstract class AddonManager {
     // private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/";
     private final static String addonPath = "addons/";
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Addon> getAddons() {
 
         ArrayList<Addon> foundAddons = new ArrayList<>();
@@ -37,7 +42,7 @@ public abstract class AddonManager {
                 while (entries.hasMoreElements()) {
                     String entryName = entries.nextElement().getName();
 
-                    if (entryName.startsWith("Addon") && !entryName.equals("Addon.class")) {
+                    if (entryName.contains("Addon") && !entryName.equals("Addon.class")) {
                         Class<?> foundClass = ucl.loadClass(entryName.replace("/", ".").replace(".class", ""));
                         Addon foundAddon = (Addon) foundClass.getDeclaredConstructor().newInstance();
                         foundAddons.add(foundAddon);
@@ -49,5 +54,31 @@ public abstract class AddonManager {
         }
 
         return foundAddons;
+    }
+
+
+    /**
+     *
+     * @param addons
+     */
+    public static void initializeAddons(final ArrayList<Addon> addons) {
+        for (Addon addon : addons)
+            addon.init();
+    }
+
+
+    /**
+     * Gather all hot words from the given addons and put them in a usable hash map
+     * @param addons - List of addons
+     * @return - HashMap containing the hotword list and
+     */
+    public static HashMap<String[], Addon> getAddonHotWords(final ArrayList<Addon> addons) {
+        HashMap<String[], Addon> hotWordsWithAssociatedAddons = new HashMap<>();
+
+        // For every addon get the corresponding hot-word-list
+        for (Addon addon : addons)
+            hotWordsWithAssociatedAddons.put(addon.hotWords, addon);
+
+        return hotWordsWithAssociatedAddons;
     }
 }
