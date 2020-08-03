@@ -34,12 +34,4 @@ public abstract class Addon {
 
     // ################### INFORMATION ###################
     public abstract boolean isRunning();
-
-    // ################### PROTECTED ###################
-
-    /**
-     *
-     * @param content
-     */
-    protected void output(final String content) { IO.out(content); }
 }

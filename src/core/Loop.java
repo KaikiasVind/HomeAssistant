@@ -37,7 +37,11 @@ public abstract class Loop {
 
             } else {
                 IO.printSystemMessage("Executing: " + prioritisedAddons.get(0).name);
-                prioritisedAddons.get(0).run(userInput);
+                // If the spoken to addon is already running, send a signal for additional user input instead of starting the addon
+                if (prioritisedAddons.get(0).isRunning())
+                    prioritisedAddons.get(0).change(userInput);
+                else
+                    prioritisedAddons.get(0).run(userInput);
             }
 
         }
