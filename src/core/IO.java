@@ -10,7 +10,6 @@ public abstract class IO {
 
     // #################################################################################################################
     // ################################################### OUTPUT ######################################################
-
     // #################################################################################################################
 
     private static IOTYPE currentOutputType = IOTYPE.CONSOLE;
@@ -26,15 +25,6 @@ public abstract class IO {
     }
 
     /**
-     * Print a message to standard output
-     *
-     * @param content - String containing the message that should be printed to stdout
-     */
-    private static void print(final String content) {
-        System.out.println(content);
-    }
-
-    /**
      * Print a system message to standard output - This is for debugging purposes and is hidden on normal runs
      *
      * @param systemMessage - String containing the message that should be printed to stdout
@@ -43,6 +33,26 @@ public abstract class IO {
         System.out.println(RED + systemMessage + RESET);
     }
 
+    // ############################################# UNIFIED OUTPUT ###################################################
+
+    /**
+     * Output a unified acceptance message - Usable from anywhere
+     */
+    public static void outAcceptMessage() {
+        out("OK");
+    }
+
+
+
+    // ################################################ BACKGROUND ####################################################
+    /**
+     * Print a message to standard output
+     *
+     * @param content - String containing the message that should be printed to stdout
+     */
+    private static void print(final String content) {
+        System.out.println(content);
+    }
 
     // #################################################################################################################
     // ################################################### INPUT #######################################################
