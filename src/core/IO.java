@@ -13,6 +13,7 @@ public abstract class IO {
     // #################################################################################################################
 
     private static IOTYPE currentOutputType = IOTYPE.CONSOLE;
+    private static boolean useDebuggingMode = false;
 
     // ####################### COLORS ##########################
     private static final String RED = "\033[0;31m";
@@ -30,7 +31,8 @@ public abstract class IO {
      * @param systemMessage - String containing the message that should be printed to stdout
      */
     public static void printSystemMessage(final String systemMessage) {
-        System.out.println(RED + systemMessage + RESET);
+        if (useDebuggingMode)
+            print(RED + systemMessage + RESET);
     }
 
     // ############################################# UNIFIED OUTPUT ###################################################
@@ -62,6 +64,10 @@ public abstract class IO {
 
     private final static Scanner consoleInputScanner = new Scanner(System.in);
 
+    /**
+     * Gather user input from the current selected input source
+     * @return - Raw user input as String
+     */
     public static String in() {
         if (currentInputType == IOTYPE.CONSOLE)
             return readUserInputFromConsole();
@@ -84,9 +90,10 @@ public abstract class IO {
      * @param inputType - The way the user interacts with the program
      * @param outputType - The way the program interacts with the user
      */
-    public static void setInputOutputType(IOTYPE inputType, IOTYPE outputType) {
+    public static void setInputOutputType(IOTYPE inputType, IOTYPE outputType, boolean isDebuggingModeActive) {
         currentInputType = inputType;
         currentOutputType = outputType;
+        useDebuggingMode = isDebuggingModeActive;
     }
 
 }

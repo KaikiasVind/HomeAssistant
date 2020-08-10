@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class main {
 
     public static void main (String[] arguments) {
-        IO.setInputOutputType(IO.IOTYPE.CONSOLE, IO.IOTYPE.CONSOLE);
+        IO.setInputOutputType(IO.IOTYPE.CONSOLE, IO.IOTYPE.CONSOLE, true);
 
         // Grab all addons from the addon folder
         ArrayList<Addon> addons = AddonManager.getAddons();
