@@ -1,6 +1,5 @@
 package core;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -121,13 +120,8 @@ public abstract class Loop {
      */
     private static boolean runAddon(final Addon addon, final String userInput) {
         // If the spoken to addon is already running, send a signal for additional user input instead of starting the addon
-        if (addon.isRunning()) {
-            IO.printSystemMessage("Changing: " + addon.name);
-            return addon.change(userInput);
-        } else {
-            IO.printSystemMessage("Starting: " + addon.name);
-            return addon.run(userInput);
-        }
+        IO.printSystemMessage("Starting: " + addon.name);
+        return addon.reactTo(userInput);
     }
 
     /**

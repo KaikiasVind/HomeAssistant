@@ -1,11 +1,12 @@
 package Tools;
 
-import core.IO;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
-
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import core.IO;
 
 public class MediaPlayer {
 
@@ -217,15 +218,6 @@ public class MediaPlayer {
 
 
     /**
-     * Check whether there is (paused) media playback currently
-     * @return True or false if (paused) playback is currently running
-     */
-    public boolean isRunning() {
-        return this.isRunning;
-    }
-
-
-    /**
      * Shut down the music player completely
      */
     public void shutDown() {
@@ -237,6 +229,35 @@ public class MediaPlayer {
         mediaPlayerComponent.mediaPlayer().submit(() -> {
             mediaPlayerComponent.mediaPlayer().release();
         });
+    }
+
+
+    /**
+     * Check whether there is (paused) media playback currently
+     * @return True or false if (paused) playback is currently running
+     */
+    public boolean isRunning() {
+        return this.isRunning;
+    }
+
+
+    /**
+     * Returns the file name of the currently playing item
+     * @return - String containing the file name only
+     */
+    public String getCurrentItem() {
+
+        // If no media is running
+        if (!this.isRunning) {
+            return "";
+        }
+
+        // Grab the path to the current file
+        String currentItemsPath = this.currentPlayListFilePaths.get(this.currentIndex);
+        // Remove the absolute file path and leave only the file name with extension
+        String currentItemName = Paths.get(currentItemsPath).getFileName().toString();
+        // Remove extension with a regular expression
+        return currentItemName.replaceFirst("[.][^.]+$", "");
     }
 
 

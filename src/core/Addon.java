@@ -19,13 +19,7 @@ public abstract class Addon {
      * Start the main functionality of the addon
      * @param userInput - The input from the user for parsing
      */
-    public abstract boolean run(String userInput);
-
-    /**
-     * Change the current run of the Addon with the given addons
-     * @param userInput - The input from the user for parsing
-     */
-    public abstract boolean change(String userInput);
+    public abstract boolean reactTo(String userInput);
 
     /**
      * Stop the run of the Addon and return to the main Loop
