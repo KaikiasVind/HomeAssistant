@@ -35,6 +35,11 @@ public abstract class IO {
             print(RED + systemMessage + RESET);
     }
 
+    public static void printEmptyLines(final int number) {
+        for (int i = 0; i < number; i++)
+            System.out.println();
+    }
+
     // ############################################# UNIFIED OUTPUT ###################################################
 
     /**
