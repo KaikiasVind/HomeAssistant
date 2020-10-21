@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.jar.JarEntry;
@@ -13,8 +15,7 @@ import java.util.jar.JarFile;
 
 public abstract class AddonManager {
 
-    // private final static String addonPath = "/home/numelen/Documents/Programming/Java/homeassistant/out/production/homeassistant/addons/";
-    private final static String addonPath = "addons/";
+    private final static String addonPath = Paths.get("", "addons").toAbsolutePath().toString();
 
     /**
      *
