@@ -23,6 +23,10 @@ public abstract class Utils {
     public static ArrayList<Addon> prioritiseAddons(final String[] parsedUserInput, final ArrayList<Addon> addons) {
         HashMap<Addon, Integer> addonsWithPrios = new HashMap<>();
 
+        // If no addons have been given, return an empty list
+        if (addons.isEmpty())
+            return new ArrayList<>();
+
         // Find the priorities for each addon based on the overlap of the user input and the addon's hot words
         for (Addon addon : addons) {
             int prio = 0;
