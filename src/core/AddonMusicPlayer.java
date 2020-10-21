@@ -1,6 +1,7 @@
 package core;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -33,16 +34,14 @@ public class AddonMusicPlayer extends Addon {
     }
 
     @Override
-    public void run(String userInput) {
-        if (userInput.contains("my music"))
+    public boolean reactTo(String userInput) {
+        if (userInput.contains("music")) {
             Media.mediaPlayer.start(this.localMusicFiles);
             this.isRunning = true;
-    }
+            return true;
+        }
 
-    @Override
-    public void change(String userInput) {
-        if (userInput.contains("next") || userInput.contains("skip"))
-            Media.mediaPlayer.playNextItem();
+        return false;
     }
 
     @Override
